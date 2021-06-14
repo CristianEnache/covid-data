@@ -17,4 +17,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('/dev', 'App\Http\Controllers\DevController@dev');
