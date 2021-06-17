@@ -17,5 +17,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::get('/dev', 'App\Http\Controllers\DevController@dev');
+Route::get('/data/one', 'App\Http\Controllers\DataController@dataOne');
