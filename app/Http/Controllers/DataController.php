@@ -180,7 +180,7 @@ class DataController extends Controller
             'IDX' => 52.63,
             'IMN' => 147.50,
             'IND' => 454.94,
-            'INX' => 'n/a',
+            'INX' => 'n.a.',
             'IRL' => 70.65,
             'IRN' => 50.22,
             'IRQ' => 88.53,
@@ -331,14 +331,14 @@ class DataController extends Controller
             'VUT' => 24.01,
             'WLD' => 58.42,
             'WSM' => 69.30,
-            'XKX' => 'n/a',
+            'XKX' => 'n.a.',
             'YEM' => 53.98,
             'ZAF' => 47.64,
             'ZMB' => 23.34,
             'ZWE' => 37.32
         ];
 
-        return isset($densities_by_country_code[$country_code]) ? $densities_by_country_code[$country_code] : 'n/a';
+        return isset($densities_by_country_code[$country_code]) ? $densities_by_country_code[$country_code] : 'n.a.';
 
 
     }
