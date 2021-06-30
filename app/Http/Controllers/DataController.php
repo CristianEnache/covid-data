@@ -31,14 +31,7 @@ class DataController extends Controller
             $countries_data[$key]['density_per_square_km'] = $this->getDensityPerSquareKM($key);
             $countries_data[$key]['total_cases_per_million'] = $last_day['total_cases_per_million'];
             $countries_data[$key]['total_cases_per_million_7_days_ago'] = $seven_days_ago['total_cases_per_million'];
-
-            //if(isset($last_day['people_vaccinated'])){
-            //    $countries_data[$key]['people_vaccinated'] = $last_day['people_vaccinated'];
-            //}
-            //
-            //if(isset($last_day['people_fully_vaccinated'])){
-            //    $countries_data[$key]['people_fully_vaccinated'] = $last_day['people_fully_vaccinated'];
-            //}
+            $countries_data[$key]['population'] = $country['population'];
 
         }
 
