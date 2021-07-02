@@ -14,9 +14,9 @@ class DataController extends Controller
         //$selected_countries = ['PER', 'PAN', 'NIC', 'GTM', 'TTO', 'JAM', 'HND', 'DOM', 'CRI', 'BHS', 'COL', 'BOL', 'VEN', 'ECU', 'CHL', 'URY', 'ARG', 'PRY'];
 
         // Get active cases
-        $countries_data = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/owid-covid-data.json'), true);
+        $all_countries_data = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/owid-covid-data.json'), true);
 
-        $filtered_countries = array_filter($countries_data, function($val, $key) use ($selected_countries) {
+        $filtered_countries = array_filter($all_countries_data, function($val, $key) use ($selected_countries) {
             return in_array($key, $selected_countries);
         }, ARRAY_FILTER_USE_BOTH);
 
@@ -29,8 +29,8 @@ class DataController extends Controller
             $seven_days_ago = $country['data'][sizeof($country['data']) - 7];
 
             $countries_data[$key]['density_per_square_km'] = $this->getDensityPerSquareKM($key);
-            $countries_data[$key]['total_cases_per_million'] = $last_day['total_cases_per_million'];
-            $countries_data[$key]['total_cases_per_million_7_days_ago'] = $seven_days_ago['total_cases_per_million'];
+            $countries_data[$key]['new_cases_per_million'] = $last_day['new_cases_per_million'];
+            $countries_data[$key]['new_cases_per_million_7_days_ago'] = $seven_days_ago['new_cases_per_million'];
             $countries_data[$key]['population'] = $country['population'];
 
         }
