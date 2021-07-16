@@ -29,8 +29,8 @@ class DataController extends Controller
             $seven_days_ago = $country['data'][sizeof($country['data']) - 7];
 
             $countries_data[$key]['density_per_square_km'] = $this->getDensityPerSquareKM($key);
-            $countries_data[$key]['new_cases_per_million'] = $last_day['new_cases_per_million'];
-            $countries_data[$key]['new_cases_per_million_7_days_ago'] = $seven_days_ago['new_cases_per_million'];
+            $countries_data[$key]['new_cases_smoothed_per_million'] = $last_day['new_cases_smoothed_per_million'];
+            $countries_data[$key]['new_cases_smoothed_per_million_7_days_ago'] = $seven_days_ago['new_cases_smoothed_per_million'];
             $countries_data[$key]['population'] = $country['population'];
 
         }
