@@ -43,10 +43,18 @@ class DataController extends Controller
 
         // Get active cases
         $all_countries_data = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/owid-covid-data.json'), true);
-
         $filtered_countries = array_filter($all_countries_data, function($val, $key) use ($selected_countries) {
             return in_array($key, $selected_countries);
         }, ARRAY_FILTER_USE_BOTH);
+
+
+        // Get Vaccinations
+        $vaccination_data_countries = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/vaccinations/vaccinations.json'), true);
+        $filtered_vaccination_data_countries = array_filter($vaccination_data_countries, function($val, $key) use ($selected_countries) {
+            return in_array($val['iso_code'], $selected_countries);
+        }, ARRAY_FILTER_USE_BOTH);
+
+
 
         // What we are going to return
         $countries_data = [];
@@ -63,24 +71,19 @@ class DataController extends Controller
 
         }
 
-
-        // Vaccinations
-        // Get active cases
-
-        $vaccination_data_countries = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/vaccinations/vaccinations.json'), true);
-
-        $filtered_vaccination_data_countries = array_filter($vaccination_data_countries, function($val, $key) use ($selected_countries) {
-            return in_array($val['iso_code'], $selected_countries);
-        }, ARRAY_FILTER_USE_BOTH);
-
+        // Solve the differences between $filtered_countries AND $filtered_vaccination_data_countries
         foreach ($filtered_vaccination_data_countries as $key => $country){
-
             $vaccinated = isset(end($country['data'])['people_vaccinated']) ? end($country['data'])['people_vaccinated'] : 'N/A';
             $fully_vaccinated = isset(end($country['data'])['people_fully_vaccinated']) ? end($country['data'])['people_fully_vaccinated'] : 'N/A';
-
             $countries_data[$country['iso_code']]['people_vaccinated'] = $vaccinated;
             $countries_data[$country['iso_code']]['people_fully_vaccinated'] = $fully_vaccinated;
+        }
 
+        // Clean elements that don't have all the data points
+        foreach($countries_data as $k => $country_data){
+            if(sizeof($country_data) !== 6)
+                //$x = array_splice($countries_data,$k, 1);
+                unset($countries_data[$k]);
         }
 
         array_multisort(array_column($countries_data, 'people_vaccinated'), SORT_DESC, $countries_data);
