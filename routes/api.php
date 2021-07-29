@@ -19,4 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/data/infections-vs-vaccinations', 'App\Http\Controllers\DataController@infectionsVsVaccinations');
-Route::get('/data/top-ten-countries-by-infection', 'App\Http\Controllers\DataController@topTenCountriesByinfectionRate');
+Route::get('/data/top-ten-countries-by-infection', 'App\Http\Controllers\DataController@topTenCountriesByInfectionRate');
+Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
