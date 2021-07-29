@@ -7,6 +7,34 @@ use Illuminate\Http\Request;
 class DataController extends Controller
 {
 
+
+    public function topTenCountriesByinfectionRate(){
+
+        $all_countries_data = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/owid-covid-data.json'), true);
+
+        // What we are going to return
+        $countries_data = [];
+
+        $filtered_countries = array_filter($all_countries_data, function($val, $key) {
+            return strpos($key, 'OWID') === false;
+
+        }, ARRAY_FILTER_USE_BOTH);
+
+
+        foreach($filtered_countries as $key => $country){
+            $countries_data[$key]['infections'] = isset(last($country['data'])['new_cases_smoothed']) ? last($country['data'])['new_cases_smoothed'] : 0;
+        }
+
+        array_multisort(array_column($countries_data, 'infections'), SORT_DESC, $countries_data);
+
+        $first_10 = array_slice($countries_data, 0, 10);
+
+        $keys = array_keys($first_10);
+
+        return response($keys);
+
+    }
+
     public function infectionsVsVaccinations(Request $request){
 
         $selected_countries =  explode(',', $request->countries);
