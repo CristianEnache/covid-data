@@ -91,13 +91,16 @@ class DataController extends Controller
 
         foreach($filtered_countries as $key => $country){
 
-            $last_day = end($country['data']);
-            $seven_days_ago = $country['data'][sizeof($country['data']) - 7];
+            $countries_data[$key]['new_cases_smoothed_per_million'] = [];
+            array_push($countries_data[$key]['new_cases_smoothed_per_million'], end($country['data'])['new_cases_smoothed_per_million']); // Last day
+            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 7]['new_cases_smoothed_per_million']); // Last day
+            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 14]['new_cases_smoothed_per_million']); // Last day
+            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 21]['new_cases_smoothed_per_million']); // Last day
+            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 28]['new_cases_smoothed_per_million']); // Last day
+            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 35]['new_cases_smoothed_per_million']); // Last day
 
-            $countries_data[$key]['density_per_square_km'] = $this->getDensityPerSquareKM($key);
-            $countries_data[$key]['new_cases_smoothed_per_million'] = $last_day['new_cases_smoothed_per_million'];
-            $countries_data[$key]['new_cases_smoothed_per_million_7_days_ago'] = $seven_days_ago['new_cases_smoothed_per_million'];
             $countries_data[$key]['population'] = $country['population'];
+            $countries_data[$key]['density_per_square_km'] = $this->getDensityPerSquareKM($key);
 
         }
 
@@ -111,7 +114,7 @@ class DataController extends Controller
 
         // Clean elements that don't have all the data points
         foreach($countries_data as $k => $country_data){
-            if(sizeof($country_data) !== 6)
+            if(sizeof($country_data) !== 5)
                 //$x = array_splice($countries_data,$k, 1);
                 unset($countries_data[$k]);
         }

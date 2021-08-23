@@ -19,4 +19,3 @@ Route::get('/', function () {
 
 Route::get('/dev', 'App\Http\Controllers\DevController@dev');
 Route::get('/data/one', 'App\Http\Controllers\DataController@dataOne');
-Route::get('/data/one', 'App\Http\Controllers\DataController@dataOne');
