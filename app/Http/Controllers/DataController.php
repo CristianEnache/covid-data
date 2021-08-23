@@ -18,11 +18,16 @@ class DataController extends Controller
         // Remove entries that contain OWID in the key (they are continents)
         $only_countries = array_filter($all_countries_data, function($val, $key) {
             return strpos($key, 'OWID') === false;
-
         }, ARRAY_FILTER_USE_BOTH);
 
 
-        foreach($only_countries as $key => $country){
+        // Filter
+        $large_countries = array_filter($only_countries, function($val, $key) {
+            return $val['population'] > 2000000;
+        }, ARRAY_FILTER_USE_BOTH);
+
+
+        foreach($large_countries as $key => $country){
             $countries_data[$key]['infections'] = isset(last($country['data'])['new_cases_smoothed']) ? last($country['data'])['new_cases_smoothed'] : 0;
         }
 
@@ -39,6 +44,8 @@ class DataController extends Controller
 
     public function topTenCountriesByVaccinationRate(){
 
+        $all_countries_data = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/owid-covid-data.json'), true);
+
         // Get Vaccinations
         $vaccination_data_countries = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/vaccinations/vaccinations.json'), true);
 
@@ -50,7 +57,12 @@ class DataController extends Controller
             return strpos($val['iso_code'], 'OWID') === false;
         }, ARRAY_FILTER_USE_BOTH);
 
-        foreach($only_countries as $key => $country){
+        // Filter
+        $large_countries = array_filter($only_countries, function($val, $key) use ($all_countries_data) {
+            return $all_countries_data[$val['iso_code']]['population'] > 2000000;
+        }, ARRAY_FILTER_USE_BOTH);
+
+        foreach($large_countries as $key => $country){
             $countries_data[$country['iso_code']]['daily_vaccinations_per_million'] = isset(last($country['data'])['daily_vaccinations_per_million']) ? last($country['data'])['daily_vaccinations_per_million'] : 0;
         }
 
