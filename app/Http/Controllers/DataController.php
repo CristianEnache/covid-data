@@ -141,15 +141,22 @@ class DataController extends Controller
 
         foreach($filtered_countries as $key => $country){
 
-            $countries_data[$key]['new_cases_smoothed_per_million_today'] = end($country['data'])['new_cases_smoothed_per_million'];
+            if(array_key_exists('new_cases_smoothed_per_million', end($country['data']))){
+                $countries_data[$key]['new_cases_smoothed_per_million_today'] = end($country['data'])['new_cases_smoothed_per_million'];
+                $countries_data[$key]['new_cases_smoothed_per_million'] = [];
+                array_push($countries_data[$key]['new_cases_smoothed_per_million'], end($country['data'])['new_cases_smoothed_per_million']);
+                array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 7]['new_cases_smoothed_per_million']);
+                array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 14]['new_cases_smoothed_per_million']);
+                array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 21]['new_cases_smoothed_per_million']);
+                array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 28]['new_cases_smoothed_per_million']);
+                array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 35]['new_cases_smoothed_per_million']);
 
-            $countries_data[$key]['new_cases_smoothed_per_million'] = [];
-            array_push($countries_data[$key]['new_cases_smoothed_per_million'], end($country['data'])['new_cases_smoothed_per_million']);
-            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 7]['new_cases_smoothed_per_million']);
-            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 14]['new_cases_smoothed_per_million']);
-            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 21]['new_cases_smoothed_per_million']);
-            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 28]['new_cases_smoothed_per_million']);
-            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 35]['new_cases_smoothed_per_million']);
+            }else{
+
+                $countries_data[$key]['new_cases_smoothed_per_million_today'] = 0;
+                $countries_data[$key]['new_cases_smoothed_per_million'] = [0,0,0,0,0];
+
+            }
 
             $countries_data[$key]['population'] = $country['population'];
             $countries_data[$key]['density_per_square_km'] = $this->getDensityPerSquareKM($key);
