@@ -63,10 +63,10 @@ class DataController extends Controller
         }, ARRAY_FILTER_USE_BOTH);
 
         foreach($large_countries as $key => $country){
-            $countries_data[$country['iso_code']]['daily_vaccinations_per_million'] = isset(last($country['data'])['daily_vaccinations_per_million']) ? last($country['data'])['daily_vaccinations_per_million'] : 0;
+            $countries_data[$country['iso_code']]['people_fully_vaccinated_per_hundred'] = isset(last($country['data'])['people_fully_vaccinated_per_hundred']) ? last($country['data'])['people_fully_vaccinated_per_hundred'] : 0;
         }
 
-        array_multisort(array_column($countries_data, 'daily_vaccinations_per_million'), SORT_DESC, $countries_data);
+        array_multisort(array_column($countries_data, 'people_fully_vaccinated_per_hundred'), SORT_DESC, $countries_data);
 
         $first_10 = array_slice($countries_data, 0, 10);
 

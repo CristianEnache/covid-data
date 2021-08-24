@@ -1,0 +1,437 @@
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+
+   ParseError 
+
+  syntax error, unexpected end of file
+
+  at routes/api.php:27
+     23▕ Route::get('/data/top-ten-countries-by-vaccination', 'App\Http\Controllers\DataController@topTenCountriesByVaccinationRate');
+     24▕ 
+     25▕ 
+     26▕ topTenCountriesByVaccinationRate
+  ➜  27▕
+
+      [2m+3 vendor frames [22m
+  4   app/Providers/RouteServiceProvider.php:44
+      Illuminate\Routing\RouteRegistrar::group()
+
+      [2m+15 vendor frames [22m
+  20  [internal]:0
+      Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
