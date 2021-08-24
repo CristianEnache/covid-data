@@ -30,10 +30,44 @@ class DataController extends Controller
         foreach($large_countries as $key => $country){
             $countries_data[$key]['new_cases_smoothed_per_million'] = isset(end($country['data'])['new_cases_smoothed_per_million']) ? end($country['data'])['new_cases_smoothed_per_million'] : 0;
         }
+
         array_multisort(array_column($countries_data, 'new_cases_smoothed_per_million'), SORT_DESC, $countries_data);
 
         $first_10 = array_slice($countries_data, 0, 10);
 
+        $keys = array_keys($first_10);
+
+        return response($keys);
+
+    }
+
+    public function lastTenCountriesByInfectionRate(){
+
+        $all_countries_data = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/owid-covid-data.json'), true);
+
+        // What we are going to return
+        $countries_data = [];
+
+        // Remove entries that contain OWID in the key (they are continents)
+        $only_countries = array_filter($all_countries_data, function($val, $key) {
+            return strpos($key, 'OWID') === false;
+        }, ARRAY_FILTER_USE_BOTH);
+
+
+        // Filter
+        $large_countries = array_filter($only_countries, function($val, $key) {
+            return $val['population'] > 2000000;
+        }, ARRAY_FILTER_USE_BOTH);
+
+
+        foreach($large_countries as $key => $country){
+            $countries_data[$key]['new_cases_smoothed_per_million'] = isset(end($country['data'])['new_cases_smoothed_per_million']) ? end($country['data'])['new_cases_smoothed_per_million'] : 0;
+        }
+
+        array_multisort(array_column($countries_data, 'new_cases_smoothed_per_million'), SORT_ASC, $countries_data);
+
+        $first_10 = array_slice($countries_data, 0, 10);
+        $first_10 = array_reverse($first_10 );
         $keys = array_keys($first_10);
 
         return response($keys);
@@ -134,8 +168,6 @@ class DataController extends Controller
                 //$x = array_splice($countries_data,$k, 1);
                 unset($countries_data[$k]);
         }
-
-        //array_multisort(array_column($countries_data, 'people_vaccinated'), SORT_DESC, $countries_data);
 
         array_multisort(array_column($countries_data, $request->sort_by), SORT_DESC, $countries_data);
 
