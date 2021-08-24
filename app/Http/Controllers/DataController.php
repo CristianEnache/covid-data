@@ -28,10 +28,9 @@ class DataController extends Controller
 
 
         foreach($large_countries as $key => $country){
-            $countries_data[$key]['infections'] = isset(last($country['data'])['new_cases_smoothed']) ? last($country['data'])['new_cases_smoothed'] : 0;
+            $countries_data[$key]['new_cases_smoothed_per_million'] = isset(end($country['data'])['new_cases_smoothed_per_million']) ? end($country['data'])['new_cases_smoothed_per_million'] : 0;
         }
-
-        array_multisort(array_column($countries_data, 'infections'), SORT_DESC, $countries_data);
+        array_multisort(array_column($countries_data, 'new_cases_smoothed_per_million'), SORT_DESC, $countries_data);
 
         $first_10 = array_slice($countries_data, 0, 10);
 
@@ -42,6 +41,9 @@ class DataController extends Controller
     }
 
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function topTenCountriesByVaccinationRate(){
 
         $all_countries_data = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/owid-covid-data.json'), true);
@@ -63,7 +65,7 @@ class DataController extends Controller
         }, ARRAY_FILTER_USE_BOTH);
 
         foreach($large_countries as $key => $country){
-            $countries_data[$country['iso_code']]['people_fully_vaccinated_per_hundred'] = isset(last($country['data'])['people_fully_vaccinated_per_hundred']) ? last($country['data'])['people_fully_vaccinated_per_hundred'] : 0;
+            $countries_data[$country['iso_code']]['people_fully_vaccinated_per_hundred'] = isset(end($country['data'])['people_fully_vaccinated_per_hundred']) ? end($country['data'])['people_fully_vaccinated_per_hundred'] : 0;
         }
 
         array_multisort(array_column($countries_data, 'people_fully_vaccinated_per_hundred'), SORT_DESC, $countries_data);
@@ -77,39 +79,43 @@ class DataController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function infectionsVsVaccinations(Request $request){
 
+        // Country ISO Codes
         $selected_countries =  explode(',', $request->countries);
-
-        //$selected_countries = ['PER', 'PAN', 'NIC', 'GTM', 'TTO', 'JAM', 'HND', 'DOM', 'CRI', 'BHS', 'COL', 'BOL', 'VEN', 'ECU', 'CHL', 'URY', 'ARG', 'PRY'];
 
         // Get active cases
         $all_countries_data = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/owid-covid-data.json'), true);
+
+        // Filter out countries not in $selected_countries array
         $filtered_countries = array_filter($all_countries_data, function($val, $key) use ($selected_countries) {
             return in_array($key, $selected_countries);
         }, ARRAY_FILTER_USE_BOTH);
 
-
-        // Get Vaccinations
+        // Get Vaccinations from different source
         $vaccination_data_countries = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/vaccinations/vaccinations.json'), true);
         $filtered_vaccination_data_countries = array_filter($vaccination_data_countries, function($val, $key) use ($selected_countries) {
             return in_array($val['iso_code'], $selected_countries);
         }, ARRAY_FILTER_USE_BOTH);
-
-
 
         // What we are going to return
         $countries_data = [];
 
         foreach($filtered_countries as $key => $country){
 
+            $countries_data[$key]['new_cases_smoothed_per_million_today'] = end($country['data'])['new_cases_smoothed_per_million'];
+
             $countries_data[$key]['new_cases_smoothed_per_million'] = [];
-            array_push($countries_data[$key]['new_cases_smoothed_per_million'], end($country['data'])['new_cases_smoothed_per_million']); // Last day
-            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 7]['new_cases_smoothed_per_million']); // Last day
-            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 14]['new_cases_smoothed_per_million']); // Last day
-            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 21]['new_cases_smoothed_per_million']); // Last day
-            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 28]['new_cases_smoothed_per_million']); // Last day
-            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 35]['new_cases_smoothed_per_million']); // Last day
+            array_push($countries_data[$key]['new_cases_smoothed_per_million'], end($country['data'])['new_cases_smoothed_per_million']);
+            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 7]['new_cases_smoothed_per_million']);
+            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 14]['new_cases_smoothed_per_million']);
+            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 21]['new_cases_smoothed_per_million']);
+            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 28]['new_cases_smoothed_per_million']);
+            array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 35]['new_cases_smoothed_per_million']);
 
             $countries_data[$key]['population'] = $country['population'];
             $countries_data[$key]['density_per_square_km'] = $this->getDensityPerSquareKM($key);
@@ -118,26 +124,30 @@ class DataController extends Controller
 
         // Solve the differences between $filtered_countries AND $filtered_vaccination_data_countries
         foreach ($filtered_vaccination_data_countries as $key => $country){
-            $vaccinated = isset(end($country['data'])['people_vaccinated']) ? end($country['data'])['people_vaccinated'] : 'N/A';
-            $fully_vaccinated = isset(end($country['data'])['people_fully_vaccinated']) ? end($country['data'])['people_fully_vaccinated'] : 'N/A';
-            $countries_data[$country['iso_code']]['people_vaccinated'] = $vaccinated;
-            $countries_data[$country['iso_code']]['people_fully_vaccinated'] = $fully_vaccinated;
+            $countries_data[$country['iso_code']]['people_vaccinated_per_hundred'] = isset(end($country['data'])['people_vaccinated_per_hundred']) ? end($country['data'])['people_vaccinated_per_hundred'] : 'N/A';
+            $countries_data[$country['iso_code']]['people_fully_vaccinated_per_hundred'] =  isset(end($country['data'])['people_fully_vaccinated_per_hundred']) ? end($country['data'])['people_fully_vaccinated_per_hundred'] : 'N/A';
         }
 
         // Clean elements that don't have all the data points
         foreach($countries_data as $k => $country_data){
-            if(sizeof($country_data) !== 5)
+            if(sizeof($country_data) !== 6)
                 //$x = array_splice($countries_data,$k, 1);
                 unset($countries_data[$k]);
         }
 
-        array_multisort(array_column($countries_data, 'people_vaccinated'), SORT_DESC, $countries_data);
+        //array_multisort(array_column($countries_data, 'people_vaccinated'), SORT_DESC, $countries_data);
+
+        array_multisort(array_column($countries_data, $request->sort_by), SORT_DESC, $countries_data);
 
         return response()->json($countries_data);
 
     }
 
 
+    /**
+     * @param $country_code
+     * @return mixed|string
+     */
     private function getDensityPerSquareKM($country_code){
 
         $densities_by_country_code = [
