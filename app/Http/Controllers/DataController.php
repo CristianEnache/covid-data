@@ -169,7 +169,11 @@ class DataController extends Controller
                 unset($countries_data[$k]);
         }
 
-        array_multisort(array_column($countries_data, $request->sort_by), SORT_DESC, $countries_data);
+        if($request->sort_order == 'DESC'){
+            array_multisort(array_column($countries_data, $request->sort_by), SORT_DESC, $countries_data);
+        }else{
+            array_multisort(array_column($countries_data, $request->sort_by), SORT_ASC, $countries_data);
+        }
 
         return response()->json($countries_data);
 
