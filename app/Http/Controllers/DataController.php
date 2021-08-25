@@ -158,6 +158,12 @@ class DataController extends Controller
 
             }
 
+            // Search for total_boosters property in at least one of the items in $country['data']
+            $booster_records = array_filter($country['data'], function($country){
+                return array_key_exists('total_boosters',$country);
+            });
+
+            $countries_data[$key]['has_booster'] = !empty($booster_records);
             $countries_data[$key]['population'] = $country['population'];
             $countries_data[$key]['density_per_square_km'] = $this->getDensityPerSquareKM($key);
 
@@ -171,7 +177,7 @@ class DataController extends Controller
 
         // Clean elements that don't have all the data points
         foreach($countries_data as $k => $country_data){
-            if(sizeof($country_data) !== 6)
+            if(sizeof($country_data) !== 7)
                 //$x = array_splice($countries_data,$k, 1);
                 unset($countries_data[$k]);
         }
