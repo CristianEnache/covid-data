@@ -141,7 +141,13 @@ class DataController extends Controller
 
         foreach($filtered_countries as $key => $country){
 
-            if(array_key_exists('new_cases_smoothed_per_million', end($country['data']))){
+            if(array_key_exists('new_cases_smoothed_per_million', end($country['data'])) &&
+                array_key_exists('new_cases_smoothed_per_million', $country['data'][sizeof($country['data']) - 7]) &&
+                array_key_exists('new_cases_smoothed_per_million', $country['data'][sizeof($country['data']) - 14]) &&
+                array_key_exists('new_cases_smoothed_per_million', $country['data'][sizeof($country['data']) - 21]) &&
+                array_key_exists('new_cases_smoothed_per_million', $country['data'][sizeof($country['data']) - 28]) &&
+                array_key_exists('new_cases_smoothed_per_million', $country['data'][sizeof($country['data']) - 35]))
+            {
                 $countries_data[$key]['new_cases_smoothed_per_million_today'] = end($country['data'])['new_cases_smoothed_per_million'];
                 $countries_data[$key]['new_cases_smoothed_per_million'] = [];
                 array_push($countries_data[$key]['new_cases_smoothed_per_million'], end($country['data'])['new_cases_smoothed_per_million']);
