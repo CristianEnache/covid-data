@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['*raphaellabs.xyz', '*labdev.xyz', '*raphscientific.com', '*raphaelscientific.com'],
 
     'allowed_origins_patterns' => [],
 
