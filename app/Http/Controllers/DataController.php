@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use League\Csv\Reader;
 
 class DataController extends Controller
 {
 
-
     public function topTenCountriesByInfectionRate(){
 
-        $all_countries_data = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/owid-covid-data.json'), true);
+        $all_countries_data = json_decode(file_get_contents(storage_path() . '/app/private/owid_covid-19-data/owid-covid-data.json'), true);
 
         // What we are going to return
         $countries_data = [];
@@ -43,7 +43,7 @@ class DataController extends Controller
 
     public function lastTenCountriesByInfectionRate(){
 
-        $all_countries_data = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/owid-covid-data.json'), true);
+        $all_countries_data = json_decode(file_get_contents(storage_path() . '/app/private/owid_covid-19-data/owid-covid-data.json'), true);
 
         // What we are going to return
         $countries_data = [];
@@ -80,10 +80,10 @@ class DataController extends Controller
      */
     public function topTenCountriesByVaccinationRate(){
 
-        $all_countries_data = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/owid-covid-data.json'), true);
+        $all_countries_data = json_decode(file_get_contents(storage_path() . '/app/private/owid_covid-19-data/owid-covid-data.json'), true);
 
         // Get Vaccinations
-        $vaccination_data_countries = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/vaccinations/vaccinations.json'), true);
+        $vaccination_data_countries = json_decode(file_get_contents(storage_path() . '/app/private/owid_covid-19-data/vaccinations.json'), true);
 
         // What we are going to return
         $countries_data = [];
@@ -123,7 +123,7 @@ class DataController extends Controller
         $selected_countries =  explode(',', $request->countries);
 
         // Get active cases
-        $all_countries_data = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/owid-covid-data.json'), true);
+        $all_countries_data = json_decode(file_get_contents(storage_path() . '/app/private/owid_covid-19-data/owid-covid-data.json'), true);
 
         // Filter out countries not in $selected_countries array
         $filtered_countries = array_filter($all_countries_data, function($val, $key) use ($selected_countries) {
@@ -131,7 +131,7 @@ class DataController extends Controller
         }, ARRAY_FILTER_USE_BOTH);
 
         // Get Vaccinations from different source
-        $vaccination_data_countries = json_decode(file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/vaccinations/vaccinations.json'), true);
+        $vaccination_data_countries = json_decode(file_get_contents(storage_path() . '/app/private/owid_covid-19-data/vaccinations.json'), true);
         $filtered_vaccination_data_countries = array_filter($vaccination_data_countries, function($val, $key) use ($selected_countries) {
             return in_array($val['iso_code'], $selected_countries);
         }, ARRAY_FILTER_USE_BOTH);
