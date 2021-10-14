@@ -493,8 +493,8 @@ class DataController extends Controller
 
         }
 
-
-        $fileName = 'statistics_custom.csv';
+        $date_time = date('Y-m-d_H_i_s');
+        $fileName = 'statistics_custom_' . $date_time . '.csv';
 
         $headers = array(
             "Content-type"        => "text/csv",
