@@ -18,6 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
+
+Route::get('/data/infections-vs-vaccinations-custom-csv', 'App\Http\Controllers\DataController@infectionsVsVaccinationsCustomToCSV');
+Route::get('/data/infections-vs-vaccinations-custom', 'App\Http\Controllers\DataController@infectionsVsVaccinationsCustom');
 Route::get('/data/infections-vs-vaccinations', 'App\Http\Controllers\DataController@infectionsVsVaccinations');
 Route::get('/data/top-ten-countries-by-infection', 'App\Http\Controllers\DataController@topTenCountriesByInfectionRate');
 Route::get('/data/last-ten-countries-by-infection', 'App\Http\Controllers\DataController@lastTenCountriesByInfectionRate');
