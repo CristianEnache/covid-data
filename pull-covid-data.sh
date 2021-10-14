@@ -21,13 +21,13 @@ wget https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/lat
 # Get other data
 cd /var/www/html/storage/app/private/other_data
 
-rm -f OxCGRT_vaccines_full.csv
-
+rm -f OxCGRT_latest.csv
+rm -f Region_Mobility_Report_CSVs.zip
 wget https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_latest.csv -P /var/www/html/storage/app/private/other_data
-wget https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_latest_allchanges.csv -P /var/www/html/storage/app/private/other_data
-wget https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_latest_combined.csv -P /var/www/html/storage/app/private/other_data
-wget https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_latest_responses.csv -P /var/www/html/storage/app/private/other_data
-wget https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_latest_withnotes.csv -P /var/www/html/storage/app/private/other_data
-wget https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_vaccines_full.csv -P /var/www/html/storage/app/private/other_data
-wget https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_withnotes_2020.csv -P /var/www/html/storage/app/private/other_data
-wget https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_withnotes_2021.csv -P /var/www/html/storage/app/private/other_data
+wget https://www.gstatic.com/covid19/mobility/Region_Mobility_Report_CSVs.zip -P /var/www/html/storage/app/private/other_data
+unzip -o /var/www/html/storage/app/private/other_data/Region_Mobility_Report_CSVs.zip -d /var/www/html/storage/app/private/other_data/mobility_data
+chown -R www-data:www-data /var/www/html/storage/app/private/other_data/mobility_data
+
+#Dispatch jobs
+cd /var/www/html
+php artisan csvs:process
