@@ -13,7 +13,9 @@ rm -f vaccinations.json
 rm -f owid-covid-latest.json
 
 # get new files
-wget https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.json -P /var/www/html/storage/app/private/owid_covid-19-data
+
+#wget https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.json -P /var/www/html/storage/app/private/owid_covid-19-data
+wget -O owid-covid-data.json https://t.co/A7aPpi2bgQ -P /var/www/html/storage/app/private/owid_covid-19-data
 wget https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json -P /var/www/html/storage/app/private/owid_covid-19-data
 wget https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/latest/owid-covid-latest.json -P /var/www/html/storage/app/private/owid_covid-19-data
 
