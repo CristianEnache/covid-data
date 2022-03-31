@@ -161,27 +161,8 @@ class DataController extends Controller {
 
 		foreach ($filtered_countries as $key => $country) {
 
-			if (array_key_exists('new_cases_smoothed_per_million', end($country['data'])) &&
-				array_key_exists('new_cases_smoothed_per_million', $country['data'][sizeof($country['data']) - 7]) &&
-				array_key_exists('new_cases_smoothed_per_million', $country['data'][sizeof($country['data']) - 14]) &&
-				array_key_exists('new_cases_smoothed_per_million', $country['data'][sizeof($country['data']) - 21]) &&
-				array_key_exists('new_cases_smoothed_per_million', $country['data'][sizeof($country['data']) - 28]) &&
-				array_key_exists('new_cases_smoothed_per_million', $country['data'][sizeof($country['data']) - 35])) {
-				$countries_data[$key]['new_cases_smoothed_per_million_today'] = end($country['data'])['new_cases_smoothed_per_million'];
-				$countries_data[$key]['new_cases_smoothed_per_million'] = [];
-				array_push($countries_data[$key]['new_cases_smoothed_per_million'], end($country['data'])['new_cases_smoothed_per_million']);
-				array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 7]['new_cases_smoothed_per_million']);
-				array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 14]['new_cases_smoothed_per_million']);
-				array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 21]['new_cases_smoothed_per_million']);
-				array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 28]['new_cases_smoothed_per_million']);
-				array_push($countries_data[$key]['new_cases_smoothed_per_million'], $country['data'][sizeof($country['data']) - 35]['new_cases_smoothed_per_million']);
-
-			} else {
-
-				$countries_data[$key]['new_cases_smoothed_per_million_today'] = 0;
-				$countries_data[$key]['new_cases_smoothed_per_million'] = [0, 0, 0, 0, 0];
-
-			}
+			$countries_data[$key]['new_cases_smoothed_per_million_today'] = array_key_exists('new_cases_smoothed_per_million', end($country['data'])) ? end($country['data'])['new_cases_smoothed_per_million'] : 0;
+			$countries_data[$key]['new_cases_smoothed_per_million'] = $this->get_week_keys($country['data'], $request->get('steps_back', 5), $request->get('step_size', 7), $country['location']);
 
 			// Search for total_boosters property in at least one of the items in $country['data']
 			$booster_records = array_filter($country['data'], function ($country) {
@@ -245,9 +226,8 @@ class DataController extends Controller {
 
 		foreach ($filtered_countries as $key => $country) {
 
-
 			$countries_data[$key]['new_cases_smoothed_per_million_today'] = array_key_exists('new_cases_smoothed_per_million', end($country['data'])) ? end($country['data'])['new_cases_smoothed_per_million'] : 0;
-			$countries_data[$key]['new_cases_smoothed_per_million'] = $this->get_week_keys($country['data'], $request->get('steps_back', 5), $request->get('step_size', 7));
+			$countries_data[$key]['new_cases_smoothed_per_million'] = $this->get_week_keys($country['data'], $request->get('steps_back', 5), $request->get('step_size', 7), $country['location']);
 
 			// Search for total_boosters property in at least one of the items in $country['data']
 			$booster_records = array_filter($country['data'], function ($country) {
@@ -286,8 +266,6 @@ class DataController extends Controller {
 
 		$averaged['new_cases_smoothed_per_million'] = [];
 
-		//new_cases_smoothed_per_million
-
 		$steps_count = sizeof(last($items)['new_cases_smoothed_per_million']);
 
 		$new_cases_smoothed_per_million = array_column($items, 'new_cases_smoothed_per_million');
@@ -307,7 +285,7 @@ class DataController extends Controller {
 
 			$averaged_key = floor(array_sum($arr) / sizeof($arr));
 
-			array_push($averaged['new_cases_smoothed_per_million'], $averaged_key);
+			array_unshift($averaged['new_cases_smoothed_per_million'], $averaged_key);
 
 		}
 
@@ -321,7 +299,7 @@ class DataController extends Controller {
 	 * @param $step_size
 	 * @return array
 	 */
-	private function get_week_keys($array, $steps_back, $step_size) {
+	private function get_week_keys($array, $steps_back, $step_size, $country_name = 'Not set') {
 
 		$week_keys = [];
 
@@ -331,7 +309,11 @@ class DataController extends Controller {
 
 			$array_length = sizeof($array);
 
-			$array_element = $array[$array_length - $offset - 1];
+			try{
+				$array_element = $array[$array_length - $offset - 1];
+			}catch(\ErrorException $exception){
+				$x = 1;
+			}
 
 			if (array_key_exists('new_cases_smoothed_per_million', $array_element)) {
 				array_push($week_keys, $array_element['new_cases_smoothed_per_million']);
