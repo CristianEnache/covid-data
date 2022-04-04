@@ -164,6 +164,34 @@ class DataController extends Controller {
 			$countries_data[$key]['new_cases_smoothed_per_million_today'] = array_key_exists('new_cases_smoothed_per_million', end($country['data'])) ? end($country['data'])['new_cases_smoothed_per_million'] : 0;
 			$countries_data[$key]['new_cases_smoothed_per_million'] = $this->get_week_keys($country['data'], $request->get('steps_back', 5), $request->get('step_size', 7), $country['location']);
 
+			// Eliminate zeros by averaging the previous and next values
+			foreach($countries_data[$key]['new_cases_smoothed_per_million'] as $smKey => $smoothed_cases){
+
+				// No need for intervention
+				if($smoothed_cases > 0)
+					continue;
+
+				$array_length = sizeof($countries_data[$key]['new_cases_smoothed_per_million']);
+
+				// Last key
+				if($smKey == ($array_length - 1)){
+					$countries_data[$key]['new_cases_smoothed_per_million'][$smKey] = $countries_data[$key]['new_cases_smoothed_per_million'][$array_length - 2];
+				}else if($smKey == 0){
+					$countries_data[$key]['new_cases_smoothed_per_million'][$smKey] = $countries_data[$key]['new_cases_smoothed_per_million'][1];
+				}else{
+
+					$averaged = ($countries_data[$key]['new_cases_smoothed_per_million'][$smKey - 1] + $countries_data[$key]['new_cases_smoothed_per_million'][$smKey + 1]) / 2;
+					$countries_data[$key]['new_cases_smoothed_per_million'][$smKey] = round($averaged, 3);
+
+				}
+
+
+
+
+
+
+			}
+
 			// Search for total_boosters property in at least one of the items in $country['data']
 			$booster_records = array_filter($country['data'], function ($country) {
 				return array_key_exists('total_boosters', $country);
