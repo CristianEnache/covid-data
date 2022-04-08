@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Traits\DataUtilities;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use League\Csv\Reader;
 
@@ -162,7 +163,7 @@ class DataController extends Controller {
 		foreach ($filtered_countries as $key => $country) {
 
 			$countries_data[$key]['new_cases_smoothed_per_million_today'] = array_key_exists('new_cases_smoothed_per_million', end($country['data'])) ? end($country['data'])['new_cases_smoothed_per_million'] : 0;
-			$countries_data[$key]['new_cases_smoothed_per_million'] = $this->get_week_keys($country['data'], $request->get('steps_back', 5), $request->get('step_size', 7), $country['location']);
+			$countries_data[$key]['new_cases_smoothed_per_million'] = $this->get_week_keys($country['data'], $request->get('steps_back', 5), $request->get('step_size', 7), $country['location'], $request->get('end_date', null));
 
 			// Eliminate zeros by averaging the previous and next values
 			foreach($countries_data[$key]['new_cases_smoothed_per_million'] as $smKey => $smoothed_cases){
@@ -232,16 +233,24 @@ class DataController extends Controller {
 	 */
 	public function infectionsVsVaccinationsAveraged(Request $request) {
 
-		// Country ISO Codes
-		$selected_countries = explode(',', $request->countries);
-
 		// Get active cases
 		$owid_covid_data_all_countries = json_decode(file_get_contents(storage_path() . '/app/private/owid_covid-19-data/owid-covid-data.json'), true);
 
-		// Filter out countries not in $selected_countries array
-		$filtered_countries = array_filter($owid_covid_data_all_countries, function ($val, $key) use ($selected_countries) {
-			return in_array($key, $selected_countries);
-		}, ARRAY_FILTER_USE_BOTH);
+		// Country ISO Codes
+		$selected_countries = explode(',', $request->countries);
+
+		if(!is_null($request->countries)){
+
+			// Filter out countries not in $selected_countries array
+			$filtered_countries = array_filter($owid_covid_data_all_countries, function ($val, $key) use ($selected_countries) {
+				return in_array($key, $selected_countries);
+			}, ARRAY_FILTER_USE_BOTH);
+
+		}else{
+
+			$filtered_countries = $owid_covid_data_all_countries;
+
+		}
 
 		// Get Vaccinations from different source
 		$vaccination_data_countries = json_decode(file_get_contents(storage_path() . '/app/private/owid_covid-19-data/vaccinations.json'), true);
@@ -255,14 +264,15 @@ class DataController extends Controller {
 		foreach ($filtered_countries as $key => $country) {
 
 			$countries_data[$key]['new_cases_smoothed_per_million_today'] = array_key_exists('new_cases_smoothed_per_million', end($country['data'])) ? end($country['data'])['new_cases_smoothed_per_million'] : 0;
-			$countries_data[$key]['new_cases_smoothed_per_million'] = $this->get_week_keys($country['data'], $request->get('steps_back', 5), $request->get('step_size', 7), $country['location']);
+			$countries_data[$key]['new_cases_smoothed_per_million'] = $this->get_week_keys($country['data'], $request->get('steps_back', 5), $request->get('step_size', 7), $country['location'], $request->get('end_date', null));
+			$countries_data[$key]['new_cases_smoothed_per_million_last_day'] = $countries_data[$key]['new_cases_smoothed_per_million'][0];
 
 			// Search for total_boosters property in at least one of the items in $country['data']
 			$booster_records = array_filter($country['data'], function ($country) {
 				return array_key_exists('total_boosters', $country);
 			});
 
-			$countries_data[$key]['population'] = $country['population'];
+			$countries_data[$key]['population'] = array_key_exists('population', $country) ? $country['population'] : 1000000;
 			$countries_data[$key]['density_per_square_km'] = $this->getDensityPerSquareKM($key);
 
 		}
@@ -281,15 +291,29 @@ class DataController extends Controller {
 
 	private function averageArray($items) {
 
+		if(sizeof($items) == 0)
+			return [];
+
 		$averaged = [];
 
 		// Convert associative to numeric
 		$items = array_values($items);
 
-		$keys_to_average = ['new_cases_smoothed_per_million_today', 'population', 'density_per_square_km', 'people_vaccinated_per_hundred', 'people_fully_vaccinated_per_hundred'];
+		$keys_to_average = ['new_cases_smoothed_per_million_last_day','new_cases_smoothed_per_million_today', 'population', 'density_per_square_km', 'people_vaccinated_per_hundred', 'people_fully_vaccinated_per_hundred'];
 
 		foreach ($keys_to_average as $k => $key) {
-			$averaged[$key] = floor(array_sum(array_column($items, $key)) / sizeof(array_column($items, $key)));
+			try{
+
+				$a = array_sum( array_column($items, $key));
+				$b = sizeof(array_column($items, $key));
+
+				$averaged[$key] = floor($a / $b );
+
+			}catch(\Exception $error_exception){
+
+				$averaged[$key] = 0;
+
+			}
 		}
 
 		$averaged['new_cases_smoothed_per_million'] = [];
@@ -327,20 +351,66 @@ class DataController extends Controller {
 	 * @param $step_size
 	 * @return array
 	 */
-	private function get_week_keys($array, $steps_back, $step_size, $country_name = 'Not set') {
+	private function get_week_keys(array $array, int $steps_back, int $step_size, $country_name = 'Not set', $end_date) {
+
+		$seconds_per_step = 86400 * $step_size; // 86400 seconds in a day
 
 		$week_keys = [];
 
+		$end_date_offset = 0;
+
+		$array_size = sizeof($array);
+
+		if(!is_null($end_date)){
+
+			// End date transformed to unix timestamp
+			$end_date_to_time = strtotime($end_date);
+
+			$last_array_date_to_time = strtotime(end($array)['date']);
+
+			// If end date bigger than last day of the array
+			if($end_date_to_time > $last_array_date_to_time){
+
+				$pointer = $end_date_to_time;
+
+				// While pointer is ahead of last available date in the array
+				while($pointer > $last_array_date_to_time && $steps_back > 0){
+					array_push($week_keys, 0);
+
+					$pointer = $pointer - $seconds_per_step;
+					$steps_back--;
+				}
+
+			}else if($end_date_to_time < $last_array_date_to_time){
+
+				for ($i = $array_size; $i > 0 ; $i--) {
+
+					$element = $array[$i - 1];
+
+					// Element date transformed to unix timestamp
+					$element_date_to_time = strtotime($element['date']);
+
+					if($element_date_to_time < $end_date_to_time){
+						$end_date_offset = $array_size - $i - 1;
+						break;
+					}
+
+				}
+
+			}
+
+		}
+
+		// Start stepping back through array
 		for ($step = 0; $step <= $steps_back; $step++) {
 
-			$offset = ($step == 0) ? 0 : $step * $step_size;
-
-			$array_length = sizeof($array);
+			// Offset is zero - TO - steps_back  (eg 0 - 5)
+			$offset = $step * $step_size;
 
 			try{
-				$array_element = $array[$array_length - $offset - 1];
+				$array_element = $array[$array_size - $end_date_offset - $offset - 1];
 			}catch(\ErrorException $exception){
-				$x = 1;
+				// Nothing
 			}
 
 			if (array_key_exists('new_cases_smoothed_per_million', $array_element)) {
