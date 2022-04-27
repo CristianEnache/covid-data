@@ -59,6 +59,6 @@ class CheckDataFiles extends Command
     }
 
 	public function notifyAdmin($file){
-		Mail::to('cristian.enache@invgroup.co.uk')->send(new CronJobFailed($file));
+		Mail::to('cristian.enache@invgroup.co.uk')->cc('tp@raphlabs.com')->send(new CronJobFailed($file));
 	}
 }
