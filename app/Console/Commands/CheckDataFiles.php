@@ -45,12 +45,14 @@ class CheckDataFiles extends Command
 			'/app/private/owid_covid-19-data/vaccinations.json',
 			'/app/private/owid_covid-19-data/owid-covid-latest.json',
 			'/app/private/other_data/OxCGRT_latest.json',
-			'/app/private/other_data/mobility_data1.json',
+			'/app/private/other_data/mobility_data.json',
 		];
 
 		foreach ($files as $file){
-			if(!file_exists($storage_path . $file))
+			if(!file_exists($storage_path . $file)){
 				$this->notifyAdmin($file);
+				break;
+			}
 		}
 
 
