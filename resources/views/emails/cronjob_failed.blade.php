@@ -1,0 +1,1 @@
+Raphstats.xyz cron job failed: {{ $reason }}

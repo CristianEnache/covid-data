@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CronJobFailed;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
 
 class DevController extends Controller
@@ -9,12 +11,11 @@ class DevController extends Controller
 
     public function dev(){
 
-        $contents = file_get_contents(storage_path() . '/app/private/covid-19-data/public/data/owid-covid-data.json');
-        $contents_arr = json_decode($contents, true);
-        $x = 2;
+		//$x = 2;
+		//
+		Artisan::call('datafiles:check');
 
-
-        //return response()->json($contents);
+		//return (new CronJobFailed())->render();
 
     }
 
