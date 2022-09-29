@@ -210,22 +210,36 @@ trait CSVDataUtilities{
 			$countries_data[$key]['density_per_square_km'] = $this->getDensityPerSquareKM($key);
 			$countries_data[$key]['healthcare'] = 'xxx';
 			$countries_data[$key]['regs'] = 'P1 Permitted';
-			$countries_data[$key]['vaccination_policy'] = floatval($oxford_last_day_array_from_json[$key]['H7_Vaccination policy']);
-			$countries_data[$key]['vaccination_policy_text'] = $this->vaccination_policies[$countries_data[$key]['vaccination_policy']];
+
+			$exists_vaccination_policy = array_key_exists($key, $oxford_last_day_array_from_json);
+
+			if($exists_vaccination_policy){
+				$countries_data[$key]['vaccination_policy'] = floatval($oxford_last_day_array_from_json[$key]['H7_Vaccination policy']);
+				$countries_data[$key]['vaccination_policy_text'] = $this->vaccination_policies[$countries_data[$key]['vaccination_policy']];
+			}else{
+				$countries_data[$key]['vaccination_policy'] = '-';
+				$countries_data[$key]['vaccination_policy_text'] = '-';
+			}
+
 			$countries_data[$key]['positive_rate'] = array_key_exists($key, $owid_covid_latest) ? $owid_covid_latest[$key]['positive_rate'] : 'N.A.';
 			$countries_data[$key]['stringency'] = array_key_exists($key, $owid_covid_latest) ? $owid_covid_latest[$key]['stringency_index'] : 'N.A.';
-			$countries_data[$key]['facial_covering'] = floatval($oxford_last_day_array_from_json[$key]['H6_Facial Coverings']);
-			$countries_data[$key]['facial_covering_text'] = $this->facial_covering_policies[$countries_data[$key]['facial_covering']];
+			$exists_facial_covering = array_key_exists($key, $oxford_last_day_array_from_json) && array_key_exists('H6_Facial Coverings', $oxford_last_day_array_from_json[$key]);
+
+			if($exists_facial_covering){
+				$countries_data[$key]['facial_covering'] =  floatval($oxford_last_day_array_from_json[$key]['H6_Facial Coverings']);
+				$countries_data[$key]['facial_covering_text'] = $this->facial_covering_policies[$countries_data[$key]['facial_covering']];
+			}else{
+				$countries_data[$key]['facial_covering'] = '-';
+				$countries_data[$key]['facial_covering_text'] = '-';
+			}
+
+
 			$countries_data[$key]['grocery_and_pharmacy_percent_change_from_baseline'] = array_key_exists($key, $mobility_data) ? intval($mobility_data[$key]['grocery_and_pharmacy_percent_change_from_baseline']) : 'N.A.';
-
-
 			$countries_data[$key]['grocery_and_pharmacy_percent_change_from_baseline_score'] = $this->getGroceryAndPharmacyScore($key, $mobility_data);
-
 			$countries_data[$key]['workplaces_percent_change_from_baseline'] = array_key_exists($key, $mobility_data) ? intval($mobility_data[$key]['workplaces_percent_change_from_baseline']) : 0;
-
 			$countries_data[$key]['workplaces_percent_change_from_baseline_score'] = $this->getWorkplaceScore($key, $mobility_data);
-
 			$countries_data[$key]['location'] = $country['location'];
+
 		}
 
 		// Solve the differences between $filtered_countries AND $filtered_vaccination_data_countries
