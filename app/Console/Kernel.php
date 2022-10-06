@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\RecordCountriesScores;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //$schedule->exec('sh /var/www/html/commands/pull.sh')->hourly();
+		$schedule->job(new RecordCountriesScores)->daily();
     }
 
     /**

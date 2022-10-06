@@ -50,4 +50,9 @@ $status = $kernel->handle(
 
 $kernel->terminate($input, $status);
 
+// Change ownership after artisan commands, on custom docker environment only
+if(getenv('APP_LOCAL_CONFIG') == 'docker'){
+	shell_exec('chown -R www-data:1000 /var/www/html/');
+}
+
 exit($status);
