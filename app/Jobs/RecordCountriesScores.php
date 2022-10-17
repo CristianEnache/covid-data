@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class RecordCountriesScores implements ShouldQueue
 {
@@ -32,6 +33,8 @@ class RecordCountriesScores implements ShouldQueue
      */
     public function handle()
     {
+
+		Log::debug("Recording Countries Scores");
 
 		$client = new Client();
 
