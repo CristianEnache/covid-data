@@ -23,6 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/data/infections-vs-vaccinations-averaged', 'App\Http\Controllers\DataController@infectionsVsVaccinationsAveraged');
 Route::get('/data/infections-vs-vaccinations-custom-csv', 'App\Http\Controllers\DataController@infectionsVsVaccinationsCustomToCSV');
 Route::get('/data/infections-vs-vaccinations-score-only', 'App\Http\Controllers\DataController@infectionsVsVaccinationsScoreOnly');
+Route::get('/data/country-scores', 'App\Http\Controllers\DataController@CountryScores');
 Route::get('/data/infections-vs-vaccinations-custom', 'App\Http\Controllers\DataController@infectionsVsVaccinationsCustom');
 Route::get('/data/infections-vs-vaccinations', 'App\Http\Controllers\DataController@infectionsVsVaccinations');
 Route::get('/data/top-ten-countries-by-infection', 'App\Http\Controllers\DataController@topTenCountriesByInfectionRate');

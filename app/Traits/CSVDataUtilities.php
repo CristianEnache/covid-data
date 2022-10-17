@@ -2,7 +2,10 @@
 
 namespace App\Traits;
 
+use App\Models\CountryScore;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 trait CSVDataUtilities{
 
@@ -238,6 +241,36 @@ trait CSVDataUtilities{
 		}
 
 		return $countries_data;
+
+	}
+
+	public function countryScores(Request $request){
+
+		$countries_array = explode(',', $request->get('countries'));
+
+		$scores = CountryScore::whereIn('country_code', $countries_array)->get(['country_code', 'score', 'created_at'])->groupBy('country_code');
+
+		$datasets = [];
+
+		foreach ($scores as $key => $score) {
+
+			$dataset = new \stdClass();
+			$dataset->label = $key;
+
+			$dataset->data = array_column($score->toArray(), 'score');
+			array_push($datasets, $dataset);
+
+		}
+
+		return response()->json($datasets);
+
+
+		//$scores = DB::table('country_scores')
+		//	->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as views'))
+		//	->groupBy('date')
+		//	->get();
+
+		//return response()->json($scores);
 
 	}
 
