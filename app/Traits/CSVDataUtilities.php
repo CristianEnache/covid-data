@@ -244,11 +244,15 @@ trait CSVDataUtilities{
 
 	}
 
+	/**
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function countryScores(Request $request){
 
 		$countries_array = explode(',', $request->get('countries'));
 
-		$scores = CountryScore::whereIn('country_code', $countries_array)->get(['country_code', 'score', 'created_at'])->groupBy('country_code');
+		$scores = CountryScore::whereIn('country_code', $countries_array)->orderBy('created_at', 'desc')->get(['country_code', 'score', 'created_at'])->groupBy('country_code');
 
 		$datasets = [];
 
