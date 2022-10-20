@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-		$schedule->job(new RecordCountriesScores)->hourly();
+		$schedule->job(new RecordCountriesScores)->dailyAt("10:00");
 		$schedule->job(new WriteLog)->everyThirtyMinutes();
     }
 

@@ -435,3 +435,13 @@
       [2m+15 vendor frames [22m
   20  [internal]:0
       Illuminate\Foundation\Application::Illuminate\Foundation\{closure}()
+PHP Parse error:  syntax error, unexpected '}' in /var/www/html/app/Console/Kernel.php on line 31
+PHP Parse error:  syntax error, unexpected '}' in /var/www/html/app/Console/Kernel.php on line 31
+PHP Parse error:  syntax error, unexpected '}' in /var/www/html/app/Console/Kernel.php on line 31
+PHP Parse error:  syntax error, unexpected '}' in /var/www/html/app/Console/Kernel.php on line 31
+PHP Parse error:  syntax error, unexpected '}' in /var/www/html/app/Console/Kernel.php on line 31
+PHP Parse error:  syntax error, unexpected '}' in /var/www/html/app/Console/Kernel.php on line 31
+PHP Parse error:  syntax error, unexpected '}' in /var/www/html/app/Console/Kernel.php on line 31
+PHP Parse error:  syntax error, unexpected '}' in /var/www/html/app/Console/Kernel.php on line 31
+PHP Parse error:  syntax error, unexpected '}' in /var/www/html/app/Console/Kernel.php on line 31
+PHP Parse error:  syntax error, unexpected '}' in /var/www/html/app/Console/Kernel.php on line 31
