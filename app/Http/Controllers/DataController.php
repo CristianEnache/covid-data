@@ -228,6 +228,35 @@ class DataController extends Controller {
 
 	}
 
+
+	/**
+	 * @param Request $request
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function boosters(Request $request) {
+
+		// Get active cases
+		$owid_covid_data_all_countries = json_decode(file_get_contents(storage_path() . '/app/private/owid_covid-19-data/owid-covid-data.json'), true);
+
+		// What we are going to return
+		$booster_per_country = [];
+
+		foreach ($owid_covid_data_all_countries as $key => $country) {
+
+			// Search for total_boosters property in at least one of the items in $country['data']
+			$booster_records = array_key_exists('total_boosters_per_hundred', last($country['data'])) ? last($country['data'])['total_boosters_per_hundred'] : null;
+
+			if(!is_null($booster_records))
+				$booster_per_country[$key] = $booster_records;
+
+		}
+
+		arsort($booster_per_country);
+
+		return response()->json($booster_per_country);
+
+	}
+
 	/**
 	 * @param Request $request
 	 * @return \Illuminate\Http\JsonResponse
