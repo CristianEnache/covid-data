@@ -253,7 +253,7 @@ class DataController extends Controller {
 
 		arsort($booster_per_country);
 
-		return response()->json($booster_per_country);
+		return response()->json($booster_per_country)->header('Access-Control-Allow-Origin', '*');
 
 	}
 
